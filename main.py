@@ -61,7 +61,26 @@ def scan_vulnerabilities(ip):
 
 def scan_ports(ip):
     # List of important ports (common service ports)
-    important_ports = [20, 21, 22, 23, 25, 53, 67, 68, 69, 80, 110, 123, 137, 138, 139, 143, 161, 162, 389, 443, 445, 514, 587, 631, 636, 873, 993, 995, 1080, 1433, 1434, 1723, 2049, 3306, 3389, 5060, 5061, 5432, 5900, 6379, 8080, 8443, 8888]   
+    important_ports = [
+        20, 21, 22, 23, 25, 53, 67, 68, 69, 80, 110, 123, 137, 138, 139, 143, 161, 162,
+        389, 443, 445, 514, 587, 631, 636, 873, 993, 995, 1080, 1433, 1434, 1723, 2049,
+        3306, 3389, 5060, 5061, 5432, 5900, 6379, 8080, 8443, 8888
+    ]
+
+    port_names = {
+        20: 'FTP Data Transfer', 21: 'FTP Control', 22: 'SSH', 23: 'Telnet', 25: 'SMTP',
+        53: 'DNS', 67: 'DHCP Server', 68: 'DHCP Client', 69: 'TFTP', 80: 'HTTP', 110: 'POP3',
+        123: 'NTP', 137: 'NetBIOS Name Service', 138: 'NetBIOS Datagram Service',
+        139: 'NetBIOS Session Service', 143: 'IMAP', 161: 'SNMP', 162: 'SNMP Trap',
+        389: 'LDAP', 443: 'HTTPS', 445: 'Microsoft-DS (Active Directory, Windows shares)',
+        514: 'Syslog', 587: 'SMTP (SSL)', 631: 'IPP (Internet Printing Protocol)',
+        636: 'LDAPS', 873: 'rsync', 993: 'IMAP (SSL)', 995: 'POP3 (SSL)', 1080: 'SOCKS Proxy',
+        1433: 'Microsoft SQL Server', 1434: 'Microsoft SQL Monitor', 1723: 'PPTP', 2049: 'NFS',
+        3306: 'MySQL', 3389: 'RDP (Remote Desktop Protocol)', 5060: 'SIP (Session Initiation Protocol)',
+        5061: 'SIP (TLS)', 5432: 'PostgreSQL', 5900: 'VNC', 6379: 'Redis', 8080: 'HTTP (Alternate)',
+        8443: 'HTTPS (Alternate)', 8888: 'HTTP (Alternate)'
+    }
+
     open_ports = []
 
     for port in important_ports:
@@ -69,10 +88,14 @@ def scan_ports(ip):
             sock.settimeout(1)  # Set timeout to 1 second
             result = sock.connect_ex((ip, port))
             if result == 0:
-                open_ports.append(port)
-            else :
-                print(f"Port {port} is not open")
+                port_name = port_names.get(port, "Unknown")
+                open_ports.append((port, port_name))
+            else:
+                port_name = port_names.get(port, "Unknown")
+                print(f"Port {port} ({port_name}) is not open")
+    
     return open_ports
+
 
 
 def main():
