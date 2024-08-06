@@ -95,12 +95,24 @@ def scan_ports(ip):
                 print(f"Port {port} ({port_name}) is not open")
     
     return open_ports
+def banner():
+    banner="""
+
+███████╗ ██████╗ █████╗ ███╗   ██╗    ██╗      █████╗ ███╗   ██╗
+██╔════╝██╔════╝██╔══██╗████╗  ██║    ██║     ██╔══██╗████╗  ██║
+███████╗██║     ███████║██╔██╗ ██║    ██║     ███████║██╔██╗ ██║
+╚════██║██║     ██╔══██║██║╚██╗██║    ██║     ██╔══██║██║╚██╗██║
+███████║╚██████╗██║  ██║██║ ╚████║    ███████╗██║  ██║██║ ╚████║
+╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝    
+    """
+    print(banner)
 
 
 
 def main():
     while True:
         print("\nMenu:")
+        banner()
         print("1. Scan IP addresses on a local network")
         print("2. Scan ports on a specific IP address") 
         print("3. Scan IP address for vulnerabilities")# want to add 
